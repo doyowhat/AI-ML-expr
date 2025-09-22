@@ -217,6 +217,7 @@ obj/
 kernel_meta/
 inout/
 extra-info/
+data/
 
 # 采样
 OPPROF*/

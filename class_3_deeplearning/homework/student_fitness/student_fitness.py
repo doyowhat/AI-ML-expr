@@ -7,7 +7,7 @@ from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 from sklearn.metrics import silhouette_score
 
-# 1. 数据加载与探索
+# 1. 数据加载
 df = pd.read_csv("fitness_test_data.csv")
 print("First 5 rows:\n", df.head())
 print("\nDescriptive statistics:\n", df.describe())
@@ -17,7 +17,7 @@ print("\nDescriptive statistics:\n", df.describe())
 features = df.columns[1:-1]  
 X = df[features].values
 
-# 标准化数据（K-means对特征尺度敏感）
+# 标准化数据
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 print("\nStandardized data sample:\n", X_scaled[:2])
@@ -28,7 +28,7 @@ sil_scores = []  # 存储不同K值下的轮廓系数
 K_range = range(2, 8)  # 测试K=2到7
 
 for k in K_range:
-    # 创建K-means模型，设置n_init=10确保兼容性
+    # 创建K-means模型
     kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
     kmeans.fit(X_scaled)
     inertias.append(kmeans.inertia_)  # 记录簇内平方和
@@ -51,7 +51,7 @@ plt.tight_layout()
 plt.savefig('k_selection.png')
 plt.show()
 
-# 4. 选择K=3训练模型（根据业务需求与指标）
+# 4. 选择K=3训练模型
 optimal_k = 3
 kmeans = KMeans(n_clusters=optimal_k, random_state=42, n_init=10)
 clusters = kmeans.fit_predict(X_scaled)
